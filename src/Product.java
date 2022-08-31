@@ -23,8 +23,8 @@ public class Product {
 	@Override
 	public String toString(){
 		String productInfo = String.format(
-			"---------------------------------------" +
-			" \n |'ID': %d \t 'name': %s \t 'category': %s \t 'price': %.2f \t 'quantity': %d", productID, productName, category, price, quantity
+				"----------------------------------------------------------------------------------------------------------------------------------------" +
+						" \n |'ID': %2d \t 'NAME': %30s \t 'CATEGORY': %10s \t 'PRICE': %20.2f \t 'QUANTITY': %5d |", productID, productName, category, price, quantity
 		);
 		return productInfo;
 	}
@@ -35,11 +35,11 @@ public class Product {
 			ResultSet rs = Database.runQuery("select * from product");
 			while(rs.next()) {
 				Product product = new Product(
-					rs.getInt("productID"),
-					rs.getString("name"),
-					rs.getString("category"),
-					rs.getDouble("price"),
-					rs.getInt("quantity")
+						rs.getInt("productID"),
+						rs.getString("name"),
+						rs.getString("category"),
+						rs.getDouble("price"),
+						rs.getInt("quantity")
 				);
 				products.add(product);
 			}
@@ -50,7 +50,7 @@ public class Product {
 		return products;
 	}
 
-	 public static void showAllProducts(List<Product> productList) {
+	public static void showAllProducts(List<Product> productList) {
 		System.out.println("GROUP 15's PRODUCTS FOR SALE:");
 		for (int i = 0; i < productList.size(); i++) {
 			System.out.println(productList.get(i));

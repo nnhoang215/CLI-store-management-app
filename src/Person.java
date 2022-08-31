@@ -40,7 +40,7 @@ class Person{
 		System.out.println("------------------");
 		System.out.print("Enter username: ");
 //			String username = scanner.nextLine().trim();
-		String username = "hoang";
+		String username = "thu";
 		System.out.println("");
 		System.out.print("Enter password: ");
 //			String password = scanner.nextLine().trim();
@@ -77,10 +77,6 @@ class Person{
 	public static boolean isResultSetEmpty(ResultSet rs) throws SQLException {
 		// from https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-are-any-results/15750832#15750832
 		return (!rs.isBeforeFirst() && rs.getRow() == 0);
-	}
-
-	public static void showActionMenu() {
-
 	}
 }
 

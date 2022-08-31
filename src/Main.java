@@ -13,7 +13,6 @@ public class Main {
 		// ########## SET UP #########
 		Database db = new Database(); // db connection
 		productList = Product.getAllProducts(); // products
-
 		do {
 			result = Person.login();
 		} while (result == null);
@@ -22,15 +21,16 @@ public class Main {
 		boolean running = true;
 		if ((Boolean) result.get("isAdmin")) { // as an admin
 			currentAdmin = new Admin(result);
+			while (running) {
+				Admin.showActionMenu();
+			}
 		} else { // as a customer
 			currentCustomer = new Customer(result);
 			Product.showAllProducts(productList);
-//			while (running) {
-//				Person.showActionMenu();
-//			}
+			while (running) {
+				Customer.showActionMenu();
+			}
 			Product.showAllProducts(Product.sortByPrice(productList, "ascend"));
 		}
 	}
 }
-
-
