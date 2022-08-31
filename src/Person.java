@@ -1,5 +1,3 @@
-package src;
-
 import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,18 +31,38 @@ class Person{
 	public void setEmail(String email) { this.email = email;}
 	public void setPhone(String phone) {this.phone = phone;}
 
+	public static void signUp(){
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter Username: ");
+		String userName = sc.nextLine().trim();
+		System.out.print("Enter password: ");
+		String password = sc.nextLine().trim();
+		System.out.print("Enter Full name: ");
+		String fullName = sc.nextLine().trim();
+		System.out.print("Enter age: ");
+		String age = sc.nextLine();
+		System.out.print("Enter email: ");
+		String _email = sc.nextLine().trim();
+		System.out.print("Enter phone number: ");
+		String phoneNumber = sc.nextLine().trim();
+		int isAdmin = 0;
+
+		
+		String query = String.format("INSERT INTO person(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)"
+										,fullName,Integer.parseInt(age),userName,password,phoneNumber,_email,isAdmin);
+		Database.updateQuery(query);
+	}
+
 	public static Map login() {
 		Map user = new HashMap();
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("------------------");
 		System.out.print("Enter username: ");
-//			String username = scanner.nextLine().trim();
-		String username = "thu";
+		String username = scanner.nextLine().trim();
 		System.out.println("");
 		System.out.print("Enter password: ");
-//			String password = scanner.nextLine().trim();
-		String password = "123";
+		String password = scanner.nextLine().trim();
 
 		try {
 			String query = String.format("select * from person where username='%s' and password='%s'", username, password);
@@ -78,5 +96,10 @@ class Person{
 		// from https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-are-any-results/15750832#15750832
 		return (!rs.isBeforeFirst() && rs.getRow() == 0);
 	}
-}
 
+	public static void showActionMenu() {
+		
+	}
+
+
+}
