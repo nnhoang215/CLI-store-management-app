@@ -1,4 +1,3 @@
-package src;
 import java.sql.*;
 
 public class Database {
@@ -7,17 +6,24 @@ public class Database {
 
 	public Database() {
 		try {
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "Alpha12345@");
-			System.out.println(conn);
-			this.statement = conn.createStatement();
-			System.out.println("Database connection: success");
+			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "password");
+			Database.statement = conn.createStatement();
 		} catch (SQLException e) {
-			System.out.println(e);
-			System.out.println("Database connection: failed");
+			e.printStackTrace();
 		}
 	}
 	public static ResultSet runQuery(String query) throws SQLException {
 		ResultSet rs = statement.executeQuery(query);
 		return rs;
+	}
+
+	public static void updateQuery(String query){
+		try {
+			statement.executeUpdate(query);
+			System.out.println("Update succeed!!!");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Update failed!!!");
+		}
 	}
 }
