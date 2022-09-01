@@ -1,3 +1,7 @@
+package src;
+
+import src.Product;
+
 public class Order {
     int orderID;
     String customerName;
@@ -73,5 +77,4 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
-    public static void 
 }

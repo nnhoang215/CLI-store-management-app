@@ -1,3 +1,5 @@
+package src;
+
 public class CartEntry {
     Product product;
     int quantity;
