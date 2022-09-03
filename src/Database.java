@@ -20,10 +20,9 @@ public class Database {
 	public static void updateQuery(String query){
 		try {
 			statement.executeUpdate(query);
-			System.out.println("Update succeed!!!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Update failed!!!");
+			e.printStackTrace();
 		}
 	}
 }

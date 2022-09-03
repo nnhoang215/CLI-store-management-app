@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -33,24 +32,97 @@ class Person{
 
 	public static void signUp(){
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter Username: ");
-		String userName = sc.nextLine().trim();
-		System.out.print("Enter password: ");
-		String password = sc.nextLine().trim();
-		System.out.print("Enter Full name: ");
-		String fullName = sc.nextLine().trim();
-		System.out.print("Enter age: ");
-		String age = sc.nextLine();
-		System.out.print("Enter email: ");
-		String _email = sc.nextLine().trim();
-		System.out.print("Enter phone number: ");
-		String phoneNumber = sc.nextLine().trim();
+		String _userName = " ";
+		String _password = " ";
+		String _fullName = " ";
+		String _age = " ";
+		String _email = " ";
+		String _phoneNumber = " ";
+		while(true){
+			System.out.print("Enter Username: ");
+			String userName = sc.nextLine().trim();
+			if(userNameValidation(userName)){
+				_userName = userName;
+				break;
+			} else {
+				System.out.println("Invalid username input, please enter again!!!");
+				continue;
+			}
+		}
+		while(true){
+			System.out.print("Enter Password: ");
+			String password = sc.nextLine().trim();
+			if(passwordValidation(password)){
+				_password = password;
+				break;
+			} else{
+				System.out.println("Invalid password input, please enter again!!!");
+				continue;
+			}
+		}
+		while(true){
+			System.out.print("Enter full name: ");
+			String fullName = sc.nextLine().trim();
+			if(nameValidation(fullName)){
+				_fullName = fullName;
+				break;
+			}
+		}
+		while(true){
+			System.out.print("Enter age: ");
+			String age = sc.nextLine().trim();
+			if(ageValidation(age)){
+				_age = age;
+				break;
+			} else {
+				System.out.println("Invalid age input, please enter again!!!");
+				continue;
+			}
+		}
+		while(true){
+			System.out.print("Enter Email: ");
+			String email = sc.nextLine().trim();
+			if(emailValidation(email)){
+				_email = email;
+				break;
+			} else {
+				System.out.println("Invalid email input, please enter again!!!");
+				continue;
+			}
+		}
+		while(true){
+			System.out.print("Enter Phonenumber: ");
+			String phoneNumber = sc.nextLine().trim();
+			if(phoneNumberValidation(phoneNumber)){
+				_phoneNumber = phoneNumber;
+				break;
+			} else {
+				System.out.println("Invalid phone-number input, please enter again!!!");
+				continue;
+			}
+		}
+		// System.out.print("Enter password: ");
+		// String password = sc.nextLine().trim();
+		// System.out.print("Enter Full name: ");
+		// String fullName = sc.nextLine().trim();
+		// System.out.print("Enter age: ");
+		// String age = sc.nextLine();
+		// System.out.print("Enter email: ");
+		// String email = sc.nextLine().trim();
+		// System.out.print("Enter phone number: ");
+		// String phoneNumber = sc.nextLine().trim();
 		int isAdmin = 0;
 
 		
 		String query = String.format("INSERT INTO person(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)"
-										,fullName,Integer.parseInt(age),userName,password,phoneNumber,_email,isAdmin);
+										,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin);
 		Database.updateQuery(query);
+
+		System.out.print("Sign Up successfully!!!\n"
+						+"-----------------------------\n"
+						+"-----------------------------\n"
+						+"-----------------------------\n"
+						);		
 	}
 
 	public static Map login() {
@@ -101,5 +173,40 @@ class Person{
 		
 	}
 
+	public static boolean userNameValidation(String userName){
+		String pattern = "^[a-zA-Z][a-zA-z0-9_]{6,19}$";
+		
+        return userName.matches(pattern);
 
+	}
+
+    public static boolean passwordValidation(String password){
+        String pattern = "^(?=.*\\d)(?=.*[a-z])(?=.*[@#$%]).{8,20}$";
+
+        return password.matches(pattern);
+    }
+
+    public static boolean phoneNumberValidation(String phoneNumber){
+        String pattern = "^\\d{10,12}$";
+
+        return phoneNumber.matches(pattern);
+    }
+
+    public static boolean nameValidation(String fullName){
+        String pattern = "^[a-zA-Z\\s]+";
+
+        return fullName.matches(pattern);
+    }
+
+    public static boolean ageValidation(String age){
+        String pattern = "^\\d{1,3}$";
+
+        return age.matches(pattern);
+    }
+
+    public static boolean emailValidation(String email){
+        String pattern = "^(.+)@(.+)$";
+
+        return email.matches(pattern);
+    }
 }
