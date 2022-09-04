@@ -9,6 +9,21 @@ import java.util.Map;
 public class Customer extends Person {
 	private double totalSpending;
 	private String membership;
+	public String getMembership() {
+		return membership;
+	}
+
+	public double getTotalSpending() {
+		return totalSpending;
+	}
+
+	public void setMembership(String membership) {
+		this.membership = membership;
+	}
+
+	public void setTotalSpending(double totalSpending) {
+		this.totalSpending = totalSpending;
+	}
 
 	public Customer(Map user) {
 		super(
@@ -32,8 +47,11 @@ public class Customer extends Person {
 			return 0.1;
 		} else if(currentCustomer.membership.equals("platinum")){
 			return 0.15;
+		} else if (currentCustomer.membership == null) {
+			return 0;
 		}
 
-		return 0;	
+		return 0;
 	}
+
 }

@@ -92,13 +92,14 @@ public class Main {
 			currentCustomer = new Customer(result);
 			String input = "";
 			Scanner sc = new Scanner(System.in);
-			while(!input.equals("6")){
+			while(!input.equals("7")){
 				System.out.println("Press 1 to show all products.");
 				System.out.println("Press 2 to sort product by price.");
 				System.out.println("Press 3 to sort product by category.");
 				System.out.println("Press 4 to add product to Shopping Cart.");
 				System.out.println("Press 5 to see your Shopping Cart.");
-				System.out.println("Press 6 to exit to main menu.");
+				System.out.println("Press 6 to checkout from your current Shopping Cart.");
+				System.out.println("Press 7 to exit to main menu.");
 				System.out.print("Enter any letter: ");
 				input = sc.nextLine().toUpperCase().trim();
 
@@ -119,6 +120,11 @@ public class Main {
 					case "5":
 						ShoppingCart.displayShoppingCart(entries);
 						ShoppingCart.displayTotalPrice(entries, currentCustomer);
+						break;
+					case "6":
+						ShoppingCart.displayShoppingCart(entries);
+						ShoppingCart.displayTotalPrice(entries, currentCustomer);
+						ShoppingCart.checkout(entries, currentCustomer);
 						break;
 					default: 
 						break;

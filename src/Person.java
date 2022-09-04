@@ -7,14 +7,16 @@ import java.util.Map;
 import java.util.Scanner;
 
 class Person{
-	public int userId;
-	public String username;
-	public String fullName;
-	public String age;
-	public String email;
-	public String phone;
-
-	public boolean isAdmin;
+	private int userId;
+	private String username;
+	private String fullName;
+	private String age;
+	private String email;
+	private String phone;
+	private boolean isAdmin;
+	public int getUserId() {
+		return userId;
+	}
 
 	public Person(int userId, String username, String fullName, String age, String email, String phone, boolean isAdmin) {
 		this.userId = userId;
