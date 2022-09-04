@@ -1,3 +1,5 @@
+package src;
+
 public class Order {
     int orderID;
     String customerName;
@@ -72,6 +74,4 @@ public class Order {
     public void setTotalAmount(float totalAmount) {
         this.totalAmount = totalAmount;
     }
-
- 
 }

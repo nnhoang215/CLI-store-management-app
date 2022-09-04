@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,7 @@ public class ShoppingCart  {
             List<CartEntry> entries= new ArrayList<>();
             
             while(true){
-                
                 Scanner sc = new Scanner(System.in);
-
                 System.out.print("Would you like to add more!!!(Y/N): ");
                 String wordEnd = sc.nextLine().toUpperCase().trim();
 
@@ -39,7 +38,6 @@ public class ShoppingCart  {
                         
                     }
                 }
-                
             }
         }
         return entries;
@@ -72,17 +70,16 @@ public class ShoppingCart  {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" +
-                "entries=" + entries +
-                '}';
+        return "ShoppingCart{" + "entries=" + entries + '}';
     }
 
     public static void displayShoppingCart(List<CartEntry> entries){
         System.out.println("-------------------------------My Cart--------------------------------");
         for(int i = 0; i < entries.size(); i++){
             System.out.printf("productID: %d\t productName: %s\t price: %.2f\t quantity: %d\n",
-                                entries.get(i).product.productID, entries.get(i).product.productName,
-                                entries.get(i).product.price, entries.get(i).quantity );
+                entries.get(i).product.productID, entries.get(i).product.productName,
+                entries.get(i).product.price, entries.get(i).quantity
+            );
         }
     }
 
@@ -102,7 +99,7 @@ public class ShoppingCart  {
         System.out.println();
     }
 
-    public static double calcTotalPrice(List<CartEntry> entries,Customer customer){
+    public static double calcTotalPrice(List<CartEntry> entries, Customer customer){
         int sum = 0;
         for(int i = 0; i < entries.size(); i++){
             sum += (entries.get(i).product.price * entries.get(i).quantity);
@@ -113,5 +110,4 @@ public class ShoppingCart  {
         double totalPrice = sum - afterDiscount;
         return totalPrice;
     }
-
 }

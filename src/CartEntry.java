@@ -1,3 +1,4 @@
+package src;
 public class CartEntry {
     Product product;
     int quantity;
@@ -22,8 +23,8 @@ public class CartEntry {
     @Override
     public String toString() {
         return "CartEntry{" +
-                "product=" + product +
-                ", quantity=" + quantity +
-                '}';
+            "product=" + product +
+            ", quantity=" + quantity +
+        '}';
     }
 }

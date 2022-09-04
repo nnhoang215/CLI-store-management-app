@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 
 public class Main {
@@ -7,7 +9,6 @@ public class Main {
 	static List<Product> productList = new ArrayList<>();
 	static List<CartEntry> entries = new ArrayList<>();
 	public static void main(String[] args) {
-
 		// ########## SET UP ###############
 		String number = " ";
 		Database db = new Database(); // db connection
@@ -19,9 +20,9 @@ public class Main {
 			System.out.println( "STORE ORDER MANAGEMENT SYSTEM"); 
 			System.out.println( "Instructor: Mr. Minh Vu");
 			System.out.println( "Group: Group 15"); 
-			System.out.println( "sXXXXXXX, Student Name"); 
-			System.out.println("sXXXXXXX, Student Name"); 
-			System.out.println( "sXXXXXXX, Student Name");
+			System.out.println( "s3926555, Nguyen Nhat Hoang");
+			System.out.println("s3928848, Bui Quang Kien");
+			System.out.println( "s8886969, Nguyen Gia Thanh");
 
 			System.out.println("-----------------------------------");
 			System.out.println();
@@ -32,19 +33,6 @@ public class Main {
 			System.out.print("Press any letters here: ");
 			String letter = sc.nextLine().toUpperCase().trim();
 			number = letter;
-			// if(letter.equals("A")){
-			// 	displayAMain();
-			// 	System.out.println("-------------------------------");
-			// 	System.out.println("-------------------------------");
-			// 	System.out.println("-------------------------------");
-			// } else if(letter.equals("B")){
-			// 	displayBmain();
-			// 	System.out.println("-------------------------------");
-			// 	System.out.println("-------------------------------");
-			// 	System.out.println("-------------------------------");
-			// } else if(letter.equals("C")){
-			// 	break;
-			// } 
 
 			switch(letter){
 				case "1":
@@ -54,7 +42,7 @@ public class Main {
 					System.out.println("-------------------------------");
 					break;
 				case "2":
-					displayBmain();
+					showSignUp();
 					System.out.println("-------------------------------");
 					System.out.println("-------------------------------");
 					System.out.println("-------------------------------");
@@ -62,9 +50,8 @@ public class Main {
 				default:
 					break;
 			}
-
+		}
 	}
-}
 	public static void displayAMain(){
 		Database db = new Database(); // db connection
 		do {
@@ -84,15 +71,6 @@ public class Main {
 				System.out.print("Enter any letter: ");
 				String letter = sc.nextLine().toUpperCase().trim();
 				number = letter;
-				// if(letter.equals("S")){
-				// 	Product.showAllProducts(productList);
-				// } else if(letter.equals("N")){
-				// 	currentAdmin.updatePrice(productList);
-				// } else if(letter.equals("M")){
-				// 	currentAdmin.addNewProduct();
-				// } else if(letter.equals("E")){
-				// 	break;
-				// }
 				switch(letter){
 					case "1":
 						Product.showAllProducts(productList);
@@ -106,49 +84,30 @@ public class Main {
 						currentAdmin.addNewProduct();
 						break;
 					case "4":
-						break;
 					default:
 						break;
 				}
 			}
 		} else { // as a customer
 			currentCustomer = new Customer(result);
-			String number = " ";
-			while(!number.equals("6")){
+			String input = "";
+			Scanner sc = new Scanner(System.in);
+			while(!input.equals("6")){
 				System.out.println("Press 1 to show all products.");
 				System.out.println("Press 2 to sort product by price.");
 				System.out.println("Press 3 to sort product by category.");
 				System.out.println("Press 4 to add product to Shopping Cart.");
 				System.out.println("Press 5 to see your Shopping Cart.");
 				System.out.println("Press 6 to exit to main menu.");
-				Scanner sc = new Scanner(System.in);
 				System.out.print("Enter any letter: ");
-				String letter = sc.nextLine().toUpperCase().trim();
-				number = letter;
-				// if(letter.equals("S")){
-				// 	Product.showAllProducts(productList);
-				// } else if(letter.equals("N")){
-				// 	Product.sortByPrice(productList, "ascend");
-				// 	Product.showAllProducts(productList);
-				// } else if(letter.equals("M")){
-				// 	Product.categoryFilter(productList);
-				// } else if(letter.equals("E")){
-				// 	break;
-				// } else if(letter.equals("B")){
-				// 	Product.showAllProducts(productList);
-				// 	entries = ShoppingCart.addProduct(productList);
-				// } else if(letter.equals("L")){
-				// 	ShoppingCart.displayShoppingCart(entries);
-				// 	ShoppingCart.displayTotalPrice(entries, currentCustomer);
-				// }
+				input = sc.nextLine().toUpperCase().trim();
 
-				switch(letter){
+				switch(input){
 					case "1":
 						Product.showAllProducts(productList);
 						break;
 					case "2":
-						Product.sortByPrice(productList, "ascend");
-						Product.showAllProducts(productList);
+						Product.showAllProducts(Product.sortByPrice(productList, "ascend"));
 						break;
 					case "3":
 						Product.categoryFilter(productList);
@@ -168,7 +127,7 @@ public class Main {
 		}
 	}
 
-	public static void displayBmain(){
+	public static void showSignUp(){
 		Person.signUp();
 	}
 }

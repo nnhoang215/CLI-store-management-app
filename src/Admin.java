@@ -1,10 +1,12 @@
-import java.sql.ResultSet;
-import java.sql.SQLException;
+package src;
+
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.xml.crypto.Data;
+//import javax.xml.crypto.Data;
 
 public class Admin extends Person{
 	public Admin(Map user){
@@ -33,8 +35,10 @@ public class Admin extends Person{
 		System.out.print("Enter quantity: ");
 		int quantity = sc.nextInt();
 
-		String query = String.format("INSERT INTO Product(name,category,price,quantity) VALUES (\"%s\",\"%s\",%f,%d)"
-									, name, category, price, quantity);
+		String query = String.format(
+			"INSERT INTO Product(name,category,price,quantity) VALUES (\"%s\",\"%s\",%f,%d)"
+			, name, category, price, quantity
+		);
 		Database.updateQuery(query);
 	}
 
@@ -55,6 +59,4 @@ public class Admin extends Person{
 
 		return productList;
 	}
-
-	
 }

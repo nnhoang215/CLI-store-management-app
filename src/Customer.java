@@ -1,8 +1,12 @@
+package src;
+
+import src.Person;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class Customer extends Person{
+public class Customer extends Person {
 	private double totalSpending;
 	private String membership;
 
@@ -32,5 +36,4 @@ public class Customer extends Person{
 
 		return 0;	
 	}
-
 }

@@ -1,3 +1,5 @@
+package src;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -91,7 +93,7 @@ class Person{
 			}
 		}
 		while(true){
-			System.out.print("Enter Phonenumber: ");
+			System.out.print("Enter Phone Number: ");
 			String phoneNumber = sc.nextLine().trim();
 			if(phoneNumberValidation(phoneNumber)){
 				_phoneNumber = phoneNumber;
@@ -114,15 +116,17 @@ class Person{
 		int isAdmin = 0;
 
 		
-		String query = String.format("INSERT INTO person(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)"
-										,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin);
+		String query = String.format(
+			"INSERT INTO person(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)" ,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
+		);
 		Database.updateQuery(query);
 
 		System.out.print("Sign Up successfully!!!\n"
-						+"-----------------------------\n"
-						+"-----------------------------\n"
-						+"-----------------------------\n"
-						);		
+			+"-----------------------------\n"
+			+"-----------------------------\n"
+			+"-----------------------------\n"
+		);
+
 	}
 
 	public static Map login() {
@@ -172,7 +176,6 @@ class Person{
 	public static void showActionMenu() {
 		
 	}
-
 	public static boolean userNameValidation(String userName){
 		String pattern = "^[a-zA-Z][a-zA-z0-9_]{6,19}$";
 		
