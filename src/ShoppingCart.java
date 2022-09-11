@@ -66,8 +66,6 @@ public class ShoppingCart  {
         return entries;
     }
 
-    
-
     @Override
     public String toString() {
         return "ShoppingCart{" + "entries=" + entries + '}';

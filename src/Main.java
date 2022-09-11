@@ -55,7 +55,7 @@ public class Main {
 	public static void displayAMain(){
 		Database db = new Database(); // db connection
 		do {
-			result = Person.login();
+			result = User.login();
 		} while (result == null);
 		boolean running = true;
 		if ((Boolean) result.get("isAdmin")) { // as an admin
@@ -128,7 +128,7 @@ public class Main {
 	}
 
 	public static void showSignUp(){
-		Person.signUp();
+		User.signUp();
 	}
 }
 
