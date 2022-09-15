@@ -77,7 +77,7 @@ public class ShoppingCart  {
         for(int i = 0; i < entries.size(); i++){
             System.out.printf("productID: %d\t productName: %s\t price: %.2f\t quantity: %d\n",
                 entries.get(i).product.getProductID(), entries.get(i).product.getProductName(),
-                entries.get(i).product.getPrice(), entries.get(i).quantity
+                entries.get(i).product.getPrice(), entries.get(i).product.getQuantity()
             );
         }
     }
@@ -86,7 +86,7 @@ public class ShoppingCart  {
         System.out.println("-----------------------------Total Price------------------------------");
         int sum = 0;
         for(int i = 0; i < entries.size(); i++){
-            sum += (entries.get(i).product.getPrice() * entries.get(i).quantity);
+            sum += (entries.get(i).product.getPrice() * entries.get(i).getQuantity());
         }
         double discount = Customer.discount(customer);
 
@@ -101,7 +101,7 @@ public class ShoppingCart  {
     public static double calcTotalPrice(List<CartEntry> entries, Customer customer){
         int sum = 0;
         for(int i = 0; i < entries.size(); i++){
-            sum += (entries.get(i).product.getPrice() * entries.get(i).quantity);
+            sum += (entries.get(i).product.getPrice() * entries.get(i).getQuantity());
         }
         double discount = Customer.discount(customer);
 
@@ -113,7 +113,7 @@ public class ShoppingCart  {
     public static JSONObject convertToJSON(List<CartEntry> entries){
         JSONObject _entries = new JSONObject();
         for (int i = 0;i < entries.size(); i++){
-            _entries.put(entries.get(i).product.getProductName(),entries.get(i).quantity);
+            _entries.put(entries.get(i).product.getProductName(),entries.get(i).getQuantity());
         }
         System.out.println(_entries);
 //        String jEntries = JSONArray.toJSONString(entries);
@@ -124,7 +124,7 @@ public class ShoppingCart  {
     public static void updateQuantity(List<CartEntry> entries){
         for (int i=0; i< entries.size();i++){
             int productID = entries.get(i).product.getProductID();
-            int changedQty = (entries.get(i).product.getQuantity()-entries.get(i).quantity);
+            int changedQty = (entries.get(i).product.getQuantity()-entries.get(i).getQuantity());
 
             String query = String.format("UPDATE test_for_java.product t SET t.quantity = %d WHERE t.productID = %d",
                     changedQty,productID);
@@ -147,9 +147,10 @@ public class ShoppingCart  {
         } else {
             customer.setMembership(null);
         }
+
         String query = String.format("INSERT INTO  test_for_java.order(buyerID, status, products, discount, totalAmount) VALUES (%d, '$s', '$s', '$s', '$f')",
                 customer.getUserId(),"Completed",_entries,customer.getMembership(),totalPrice);
-        String query2 = String.format("UPDATE test_for_java.person t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
+        String query2 = String.format("UPDATE test_for_java.users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
         updateQuantity(entries);
         // add a function that decrease product quantity after a successful checkout

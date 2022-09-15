@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 class User{
-	public int userId;
-	public String username;
-	public String fullName;
-	public String age;
-	public String email;
-	public String phone;
+	private int userId;
+	private String username;
+	private String fullName;
+	private String age;
+	private String email;
+	private String phone;
 
-	public boolean isAdmin;
+	private boolean isAdmin;
 
 	public User(int userId, String username, String fullName, String age, String email, String phone, boolean isAdmin) {
 		this.userId = userId;
@@ -25,6 +25,34 @@ class User{
 		this.phone = phone;
 
 		this.isAdmin = isAdmin;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 
 	public void setFullName(String fullName) {this.fullName = fullName;}

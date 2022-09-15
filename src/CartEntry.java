@@ -1,8 +1,11 @@
 package src;
 public class CartEntry {
     Product product;
-    int quantity;
+    private int quantity;
 
+    public int getQuantity() {
+        return quantity;
+    }
 
     public CartEntry(Product product, int quantity) {
         this.product = product;
