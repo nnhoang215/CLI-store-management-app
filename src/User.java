@@ -6,19 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-class Person{
-	private int userId;
-	private String username;
-	private String fullName;
-	private String age;
-	private String email;
-	private String phone;
-	private boolean isAdmin;
-	public int getUserId() {
-		return userId;
-	}
+class User{
+	public int userId;
+	public String username;
+	public String fullName;
+	public String age;
+	public String email;
+	public String phone;
 
-	public Person(int userId, String username, String fullName, String age, String email, String phone, boolean isAdmin) {
+	public boolean isAdmin;
+
+	public User(int userId, String username, String fullName, String age, String email, String phone, boolean isAdmin) {
 		this.userId = userId;
 		this.username = username;
 		this.fullName = fullName;
@@ -119,7 +117,7 @@ class Person{
 
 		
 		String query = String.format(
-			"INSERT INTO person(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)" ,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
+			"INSERT INTO Users(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)" ,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
 		);
 		Database.updateQuery(query);
 
@@ -143,7 +141,7 @@ class Person{
 		String password = scanner.nextLine().trim();
 
 		try {
-			String query = String.format("select * from person where username='%s' and password='%s'", username, password);
+			String query = String.format("select * from Users where username='%s' and password='%s'", username, password);
 			ResultSet rs = Database.runQuery(query);
 			// check if query returns anything
 			if (isResultSetEmpty(rs)) {
