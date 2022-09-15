@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 //import javax.xml.crypto.Data;
 
-public class Admin extends Person{
+public class Admin extends User{
 	public Admin(Map user){
 		super(
 			(Integer) user.get("userID"),

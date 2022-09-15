@@ -7,11 +7,51 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Product {
-	int productID;
-	String productName;
-	String category;
-	Double price;
-	int quantity;
+	private int productID;
+	private String productName;
+	private String category;
+	private Double price;
+	private int quantity;
+
+	public int getProductID() {
+		return productID;
+	}
+
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	public Product(int id, String name, String category, Double price, int quantity) {
 		this.productID = id;
