@@ -115,7 +115,7 @@ public class Main {
 						break;
 					case "4":
 						Product.showAllProducts(productList);
-						entries = ShoppingCart.addProduct(productList);
+						entries = ShoppingCart.addProduct(productList, entries);
 						break;
 					case "5":
 						ShoppingCart.displayShoppingCart(entries);

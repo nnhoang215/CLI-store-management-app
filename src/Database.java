@@ -22,10 +22,10 @@ public class Database {
 	public static void updateQuery(String query){
 		try {
 			statement.executeUpdate(query);
-			System.out.println("Updated successfully!");
+//			System.out.println("Updated successfully!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Update failed!");
+			e.printStackTrace();
 		}
 	}
 }
