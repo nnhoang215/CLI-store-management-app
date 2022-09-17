@@ -41,16 +41,13 @@ public class Customer extends User {
 	}
 
 	public static double discount(Customer currentCustomer){
-		if(currentCustomer.membership.equals("silver")){
+		if("silver".equals(currentCustomer.membership)){
 			return 0.05;
-		} else if (currentCustomer.membership.equals("gold")){
+		} else if ("gold".equals(currentCustomer.membership)){
 			return 0.1;
-		} else if(currentCustomer.membership.equals("platinum")){
+		} else if("platinum".equals(currentCustomer.membership)){
 			return 0.15;
-		} else if (currentCustomer.membership == null) {
-			return 0;
 		}
-
 		return 0;
 	}
 

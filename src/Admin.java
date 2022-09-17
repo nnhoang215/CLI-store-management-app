@@ -2,6 +2,9 @@ package src;
 
 //import java.sql.ResultSet;
 //import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -58,5 +61,20 @@ public class Admin extends User{
 		productList = Product.getAllProducts();
 
 		return productList;
+	}
+
+	public void searchOrderByCustomerID() {
+		HashMap<>
+		try {
+			String query = String.format("select * from orderdetails");
+			ResultSet rs = Database.runQuery(query);
+
+
+			while (rs.next()) {
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Login error");
+		}
 	}
 }

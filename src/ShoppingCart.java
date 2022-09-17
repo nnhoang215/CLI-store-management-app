@@ -1,5 +1,8 @@
 package src;
-import org.json.simple.JSONObject;
+import com.mysql.cj.protocol.Resultset;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +16,8 @@ public class ShoppingCart  {
         this.entries = new ArrayList<>();
     }
 
-    public static List<CartEntry> addProduct(List<Product> productList){
-            List<CartEntry> entries= new ArrayList<>();
-            
+    public static List<CartEntry> addProduct(List<Product> productList, List<CartEntry> entries){
+
             while(true){
                 Scanner sc = new Scanner(System.in);
                 System.out.print("Would you like to add more!!!(Y/N): ");
@@ -77,7 +79,7 @@ public class ShoppingCart  {
         for(int i = 0; i < entries.size(); i++){
             System.out.printf("productID: %d\t productName: %s\t price: %.2f\t quantity: %d\n",
                 entries.get(i).product.getProductID(), entries.get(i).product.getProductName(),
-                entries.get(i).product.getPrice(), entries.get(i).product.getQuantity()
+                entries.get(i).product.getPrice(), entries.get(i).getQuantity()
             );
         }
     }
@@ -110,17 +112,6 @@ public class ShoppingCart  {
         return totalPrice;
     }
 
-    public static JSONObject convertToJSON(List<CartEntry> entries){
-        JSONObject _entries = new JSONObject();
-        for (int i = 0;i < entries.size(); i++){
-            _entries.put(entries.get(i).product.getProductName(),entries.get(i).getQuantity());
-        }
-        System.out.println(_entries);
-//        String jEntries = JSONArray.toJSONString(entries);
-//        System.out.println(jEntries);
-        return _entries;
-    }
-
     public static void updateQuantity(List<CartEntry> entries){
         for (int i=0; i< entries.size();i++){
             int productID = entries.get(i).product.getProductID();
@@ -134,7 +125,6 @@ public class ShoppingCart  {
 
     public static void checkout(List<CartEntry> entries,Customer customer){
         double totalPrice = calcTotalPrice(entries, customer);
-        JSONObject _entries = convertToJSON(entries);
         double totalSpending = customer.getTotalSpending();
         totalSpending += totalPrice;
         customer.setTotalSpending(totalSpending);
@@ -147,16 +137,46 @@ public class ShoppingCart  {
         } else {
             customer.setMembership(null);
         }
+        // add to product
+        // sort by orderID desc
+        // select orderID
+        // use selected ID to insert to orderDetails
 
-        String query = String.format("INSERT INTO  test_for_java.order(buyerID, status, products, discount, totalAmount) VALUES (%d, '$s', '$s', '$s', '$f')",
-                customer.getUserId(),"Completed",_entries,customer.getMembership(),totalPrice);
-        String query2 = String.format("UPDATE test_for_java.users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
+        String updateOrder = String.format("INSERT INTO test_for_java.order(buyerID, status,discount, totalAmount) VALUES (%d, '%s', '%s', %f)",
+                customer.getUserId(),"delivered",customer.getMembership(),totalPrice);
+        Database.updateQuery(updateOrder);
+
+        String selectOrderID = String.format("select * from test_for_java.`order` order by orderID DESC limit 1;");
+        try{
+            ResultSet rs = Database.runQuery(selectOrderID);
+            rs.next();
+            int orderID = rs.getInt("orderID");
+
+            for (CartEntry entry:entries){
+                int productID = entry.product.getProductID();
+                int quantity = entry.getQuantity();
+                String addOrderDetail = String.format("INSERT INTO orderdetails(orderID,productID,quantity) VALUES(%d,%d,%d)",
+                        orderID,productID,quantity);
+               Database.updateQuery(addOrderDetail);
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+
+
+//        String query = String.format("INSERT INTO  test_for_java.order(buyerID, status, products, discount, totalAmount) VALUES (%d, '$s', '$s', '$s', '$f')",
+//                customer.getUserId(),"Completed","null",customer.getMembership(),totalPrice);
+        String updateMembership = String.format("UPDATE test_for_java.users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
-        updateQuantity(entries);
-        // add a function that decrease product quantity after a successful checkout
-        // add another condition to check if there are stock in the db
-        Database.updateQuery(query);
-        Database.updateQuery(query2);
+//        updateQuantity(entries);
+//        // add a function that decrease product quantity after a successful checkout
+//        // add another condition to check if there are stock in the db
+//        Database.updateQuery(query);
+        Database.updateQuery(updateMembership);
 
         System.out.print("Checkout successfully!!!\n"
                 +"-----------------------------\n"
