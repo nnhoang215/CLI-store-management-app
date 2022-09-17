@@ -145,7 +145,7 @@ class User{
 
 		
 		String query = String.format(
-			"INSERT INTO Users(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)" ,_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
+			"INSERT INTO Users(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)",_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
 		);
 		Database.updateQuery(query);
 

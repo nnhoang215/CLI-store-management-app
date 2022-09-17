@@ -63,18 +63,5 @@ public class Admin extends User{
 		return productList;
 	}
 
-	public void searchOrderByCustomerID() {
-		HashMap<>
-		try {
-			String query = String.format("select * from orderdetails");
-			ResultSet rs = Database.runQuery(query);
 
-
-			while (rs.next()) {
-
-			}
-		} catch (SQLException e) {
-			System.out.println("Login error");
-		}
-	}
 }

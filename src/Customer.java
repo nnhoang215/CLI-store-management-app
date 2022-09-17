@@ -39,7 +39,18 @@ public class Customer extends User {
 		this.totalSpending = (Double) user.get("totalSpending");
 		this.membership = (String) user.get("membership");
 	}
-
+	public void printInfo() {
+		System.out.println(
+			"\u001B[32m This is your personal information"
+			+ "\n| Username: " + this.getUsername()
+			+ "\n| Name: " + this.getFullName()
+			+ "\n| Age: " + this.getAge()
+			+ "\n| Email: " + this.getEmail()
+			+ "\n| Phone: " + this.getPhone()
+			+ "\n| Total spending: " + this.getTotalSpending()
+			+ "\n| Membership: " + this.getMembership() + "\u001B[0m"
+		);
+	}
 	public static double discount(Customer currentCustomer){
 		if("silver".equals(currentCustomer.membership)){
 			return 0.05;
