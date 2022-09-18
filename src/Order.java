@@ -32,7 +32,7 @@ public class Order {
         Scanner sc1 = new Scanner(System.in);
         String status = sc1.nextLine();
 
-        String query = String.format("UPDATE `Order` SET status = '%s' WHERE orderID = %d", status, orderID);
+        String query = String.format("UPDATE Orders SET orderStatus = '%s' WHERE orderID = %d", status, orderID);
         Database.updateQuery(query);
     }
     public static void searchOrderByCustomerID() throws SQLException {
@@ -40,9 +40,9 @@ public class Order {
         System.out.print("Enter customer ID number: ");
         int customerID = sc.nextInt();
         ResultSet rs = Database.runQuery("" +
-                "select `Order`.orderID as orderID, " +
+                "select Orders.orderID as orderID, " +
                 "buyerID, " +
-                "status, " +
+                "orderStatus, " +
                 "discount, " +
                 "totalAmount, " +
                 "OrderDetails.quantity as quantity, " +
@@ -50,9 +50,9 @@ public class Order {
                 "name, " +
                 "category, " +
                 "price " +
-                "from `Order` join" +
-                " OrderDetails on Order.orderID = OrderDetails.orderID join Product on OrderDetails.productID = Product.productID" +
-                " where `Order`.buyerID =" + customerID);
+                "from Orders join" +
+                " OrderDetails on Orders.orderID = OrderDetails.orderID join Product on OrderDetails.productID = Product.productID" +
+                " where Orders.buyerID =" + customerID);
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
         while (rs.next()) {
@@ -70,9 +70,9 @@ public class Order {
         System.out.print("Enter order ID number: ");
         int orderID = sc.nextInt();
         ResultSet rs = Database.runQuery("" +
-            "select `Order`.orderID as orderID, " +
+            "select Orders.orderID as orderID, " +
                     "buyerID, " +
-                    "status, " +
+                    "orderStatus, " +
                     "discount, " +
                     "totalAmount, " +
                     "OrderDetails.quantity as quantity, " +
@@ -80,9 +80,9 @@ public class Order {
                     "name, " +
                     "category, " +
                     "price " +
-                "from `Order` join" +
-                " OrderDetails on Order.orderID = OrderDetails.orderID join Product on OrderDetails.productID = Product.productID" +
-                " where `Order`.orderID =" + orderID);
+                "from Orders join" +
+                " OrderDetails on Orders.orderID = OrderDetails.orderID join Product on OrderDetails.productID = Product.productID" +
+                " where Orders.orderID =" + orderID);
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
         while (rs.next()) {
@@ -94,7 +94,7 @@ public class Order {
             }
             System.out.println("");
         }
-
+        System.out.println("\u001B[31m --------------------------------------- \u001B[0m");
     }
     public int getOrderID() {
         return orderID;
