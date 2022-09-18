@@ -8,7 +8,7 @@ public class Database {
 	public Database() {
 		try {
 //			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "password");
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "Alpha12345@");
+			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "password");
 			Database.statement = conn.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();

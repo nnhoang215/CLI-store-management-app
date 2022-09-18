@@ -172,7 +172,7 @@ public class ShoppingCart  {
 //                customer.getUserId(),"Completed","null",customer.getMembership(),totalPrice);
         String updateMembership = String.format("UPDATE test_for_java.users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
-//        updateQuantity(entries);
+        updateQuantity(entries);
 //        // add a function that decrease product quantity after a successful checkout
 //        // add another condition to check if there are stock in the db
 //        Database.updateQuery(query);
