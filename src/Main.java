@@ -146,6 +146,7 @@ public class Main {
 						ShoppingCart.displayShoppingCart(entries);
 						ShoppingCart.displayTotalPrice(entries, currentCustomer);
 						ShoppingCart.checkout(entries, currentCustomer, productList);
+
 						entries.clear();
 						break;
 					case "7":

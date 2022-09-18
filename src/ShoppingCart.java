@@ -1,13 +1,10 @@
 package src;
-import com.mysql.cj.protocol.Resultset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class ShoppingCart  {
     static List<CartEntry> entries;
@@ -125,6 +122,7 @@ public class ShoppingCart  {
         double totalPrice = sum - afterDiscount;
         return totalPrice;
     }
+
 
     public static void updateQuantity(List<CartEntry> entries, List<Product> productList) throws SQLException {
         // Update quantity of database
