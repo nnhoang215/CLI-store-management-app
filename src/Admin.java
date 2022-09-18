@@ -79,6 +79,22 @@ public class Admin extends User{
 		return productList;
 	}
 
+	public static void displayAllUsers() throws SQLException {
+		String _query = "select * from Users";
+		ResultSet rs = Database.runQuery(_query);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		while (rs.next()) {
+			System.out.println("\u001B[31m --------------------------------------- \u001B[0m");
+			for (int i = 1; i <= columnsNumber; i++) {
+				if (i > 1) System.out.print("  |");
+				String columnValue = rs.getString(i);
+				System.out.print(" " + rsmd.getColumnName(i) + ": " + columnValue);
+			}
+			System.out.println("");
+		}
+	}
+
 	public static void displayAllOrders() throws SQLException {
 		String _query = "select * from Orders";
 		ResultSet rs = Database.runQuery(_query);
