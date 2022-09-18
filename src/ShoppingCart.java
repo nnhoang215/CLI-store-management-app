@@ -17,31 +17,43 @@ public class ShoppingCart  {
     }
 
     public static List<CartEntry> addProduct(List<Product> productList, List<CartEntry> entries){
+        // This function adds products to the shopping cart
+        int _count = 0;
 
-            while(true){
-                Scanner sc = new Scanner(System.in);
-                System.out.print("Would you like to add more!!!(Y/N): ");
-                String wordEnd = sc.nextLine().toUpperCase().trim();
-
-                if(wordEnd.equals("N")){
-                    break;
-                } else {
-                    System.out.print("Enter product ID: ");
-                    int productID = sc.nextInt();
-                    System.out.print("Enter quantity: ");
-                    int qty = sc.nextInt();
-                    List<Product> _productList = new ArrayList<>();
-                    _productList.addAll(productList);
-                    int len = _productList.size();
-                    for(int i = 0; i < len; i++){
+        while(true){
+            String wordEnd ="";
+            Scanner sc = new Scanner(System.in);
+            if (_count != 0) {
+                // Asks for user input and validate input
+                System.out.print("Would you like to add more?(Y/N): ");
+                do {
+                    Scanner _sc = new Scanner(System.in);
+                    wordEnd = _sc.nextLine().toUpperCase().trim();
+                    if (!wordEnd.equals("Y") && !wordEnd.equals("N")){
+                        System.out.println(wordEnd);
+                        System.out.println("Cannot recognize input, try again");
+                    }
+                } while(!wordEnd.equals("Y") && !wordEnd.equals("N"));
+            }
+            if(_count == 0 || !wordEnd.equals("N")){
+                System.out.print("Enter product ID: ");
+                int productID = sc.nextInt();
+                System.out.print("Enter quantity: ");
+                int qty = sc.nextInt();
+                List<Product> _productList = new ArrayList<>();
+                _productList.addAll(productList);
+                int len = _productList.size();
+                for(int i = 0; i < len; i++){
                     if(productList.get(i).getProductID() == productID){
                         CartEntry newEntry = new CartEntry(productList.get(i), 1);
                         newEntry.setQuantity(qty);
-                        entries.add(newEntry);
-                        
+                        entries.add(newEntry); // add product to cart
                     }
                 }
+            } else {
+                break;
             }
+            _count = 1;
         }
         return entries;
     } 
@@ -75,6 +87,7 @@ public class ShoppingCart  {
     }
 
     public static void displayShoppingCart(List<CartEntry> entries){
+        // displays shopping cart
         System.out.println("-------------------------------My Cart--------------------------------");
         for(int i = 0; i < entries.size(); i++){
             System.out.printf("productID: %d\t productName: %s\t price: %.2f\t quantity: %d\n",
@@ -85,6 +98,7 @@ public class ShoppingCart  {
     }
 
     public static void displayTotalPrice(List<CartEntry> entries,Customer customer){
+        // shows total price of cart
         System.out.println("-----------------------------Total Price------------------------------");
         int sum = 0;
         for(int i = 0; i < entries.size(); i++){
@@ -112,18 +126,20 @@ public class ShoppingCart  {
         return totalPrice;
     }
 
-    public static void updateQuantity(List<CartEntry> entries){
+    public static void updateQuantity(List<CartEntry> entries, List<Product> productList) throws SQLException {
+        // Update quantity of database
         for (int i=0; i< entries.size();i++){
             int productID = entries.get(i).product.getProductID();
             int changedQty = (entries.get(i).product.getQuantity()-entries.get(i).getQuantity());
-
-            String query = String.format("UPDATE test_for_java.product t SET t.quantity = %d WHERE t.productID = %d",
+            String query = String.format("UPDATE Product SET quantity = %d WHERE productID = %d",
                     changedQty,productID);
             Database.updateQuery(query);
+            productList = Product.getAllProducts();
         }
     }
 
-    public static void checkout(List<CartEntry> entries,Customer customer){
+    public static void checkout(List<CartEntry> entries,Customer customer,List<Product> productList) throws SQLException {
+        // checks out the current cart and clears cart
         double totalPrice = calcTotalPrice(entries, customer);
         double totalSpending = customer.getTotalSpending();
         totalSpending += totalPrice;
@@ -158,7 +174,7 @@ public class ShoppingCart  {
                 int quantity = entry.getQuantity();
                 String addOrderDetail = String.format("INSERT INTO OrderDetails(orderID,productID,quantity) VALUES(%d,%d,%d)",
                         orderID,productID,quantity);
-               Database.updateQuery(addOrderDetail);
+                Database.updateQuery(addOrderDetail);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -166,7 +182,7 @@ public class ShoppingCart  {
 //                customer.getUserId(),"Completed","null",customer.getMembership(),totalPrice);
         String updateMembership = String.format("UPDATE Users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
-//        updateQuantity(entries);
+        updateQuantity(entries, productList);
 //        // add a function that decrease product quantity after a successful checkout
 //        // add another condition to check if there are stock in the db
 //        Database.updateQuery(query);
@@ -177,7 +193,6 @@ public class ShoppingCart  {
                 +"-----------------------------\n"
                 +"-----------------------------\n"
         );
-
     }
 
 }

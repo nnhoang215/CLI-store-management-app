@@ -12,6 +12,7 @@ public class CartEntry {
         this.quantity = quantity;
     }
      public void setQuantity(int qty){
+        // choose the quantity desired
          if(qty>0){
             this.quantity = qty;
          }else {

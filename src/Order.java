@@ -24,7 +24,7 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
-    public static void updateOrderStatus() {
+    public static void updateOrderStatus() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter orderID number: ");
         int orderID = sc.nextInt();
@@ -34,36 +34,6 @@ public class Order {
 
         String query = String.format("UPDATE Orders SET orderStatus = '%s' WHERE orderID = %d", status, orderID);
         Database.updateQuery(query);
-    }
-    public static void searchOrderByCustomerID() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter customer ID number: ");
-        int customerID = sc.nextInt();
-        ResultSet rs = Database.runQuery("" +
-                "select Orders.orderID as orderID, " +
-                "buyerID, " +
-                "orderStatus, " +
-                "discount, " +
-                "totalAmount, " +
-                "OrderDetails.quantity as quantity, " +
-                "OrderDetails.productID as productID, " +
-                "name, " +
-                "category, " +
-                "price " +
-                "from Orders join" +
-                " OrderDetails on Orders.orderID = OrderDetails.orderID join Product on OrderDetails.productID = Product.productID" +
-                " where Orders.buyerID =" + customerID);
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (rs.next()) {
-            System.out.println("\u001B[31m --------------------------------------- \u001B[0m");
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print("  |");
-                String columnValue = rs.getString(i);
-                System.out.print(" " + rsmd.getColumnName(i) + ": " + columnValue);
-            }
-            System.out.println("");
-        }
     }
     public static void searchOrderByOrderID() throws SQLException {
         Scanner sc = new Scanner(System.in);

@@ -147,14 +147,15 @@ class User{
 		String query = String.format(
 			"INSERT INTO Users(f_name,age,username,userPassword,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)",_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
 		);
-		Database.updateQuery(query);
-
-		System.out.print("Sign Up successfully!!!\n"
-			+"-----------------------------\n"
-			+"-----------------------------\n"
-			+"-----------------------------\n"
-		);
-
+		try {
+			Database.updateQuery(query);
+			System.out.println("""
+				-------------------------------
+				-------------------------------
+				-------------------------------""");
+		} catch (SQLException e) {
+			System.out.println("Duplicate username or wrong input format");
+		}
 	}
 
 	public static Map login() {

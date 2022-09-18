@@ -20,7 +20,7 @@ public class Database {
 		return rs;
 	}
 
-	public static void updateQuery(String query){
+	public static void updateQuery(String query) throws SQLException{
 		try {
 			statement.executeUpdate(query);
 			System.out.println("Updated successfully!");

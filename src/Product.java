@@ -98,6 +98,7 @@ public class Product {
 	}
 
 	 public static void showAllProducts(List<Product> productList) {
+		// Prints all products and their information
 		System.out.println("\u001B[31m" + "GROUP 15's PRODUCTS FOR SALE:" + "\u001B[0m");
 		for (int i = 0; i < productList.size(); i++) {
 			System.out.println(productList.get(i));
@@ -105,11 +106,11 @@ public class Product {
 	}
 
 	public static List<Product> sortByPrice(List<Product> productList, String direction){
+		// Bubble sorts the prices
 		List<Product> _productList = new ArrayList<>();
 		_productList.addAll(productList);
 		int len = _productList.size();
 		for (int i=0;i < len-1;++i){
-
 			for(int j=0; j < len-i-1; ++j){
 				boolean _ascendCondition = _productList.get(j+1).price < _productList.get(j).price;
 				boolean _descendCondition = _productList.get(j+1).price > _productList.get(j).price;
@@ -124,6 +125,8 @@ public class Product {
 	}
 
 	public static void categoryFilter(List<Product> productList){
+		// Filter by category
+
 		System.out.println("Press A to see Drinks");
 		System.out.println("Press B to see Foods");
 
@@ -149,6 +152,5 @@ public class Product {
 					System.out.println(_productList.get(j));
 				}
 			}
-		showAllProducts(_categoryFilteredList);
 	}
 }

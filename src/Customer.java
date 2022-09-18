@@ -1,6 +1,7 @@
 package src;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public class Customer extends User {
 		this.membership = (String) user.get("membership");
 	}
 	public void printInfo() {
+		// formats and prints current user's information
 		System.out.println(
 			"\u001B[32m This is your personal information"
 			+ "\n| Username: " + this.getUsername()
@@ -50,6 +52,22 @@ public class Customer extends User {
 			+ "\n| Total spending: " + this.getTotalSpending()
 			+ "\n| Membership: " + this.getMembership() + "\u001B[0m"
 		);
+	}
+
+	public void showMyOrders() throws SQLException {
+		String _query = "select * from Orders where buyerID = " + this.getUserId();
+		ResultSet rs = Database.runQuery(_query);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		while (rs.next()) {
+			System.out.println("\u001B[31m --------------------------------------- \u001B[0m");
+			for (int i = 1; i <= columnsNumber; i++) {
+				if (i > 1) System.out.print("  |");
+				String columnValue = rs.getString(i);
+				System.out.print(" " + rsmd.getColumnName(i) + ": " + columnValue);
+			}
+			System.out.println("");
+		}
 	}
 	public static double discount(Customer currentCustomer){
 		if("silver".equals(currentCustomer.membership)){

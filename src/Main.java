@@ -2,7 +2,6 @@ package src;
 
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class Main {
 	static Map result;
@@ -17,6 +16,7 @@ public class Main {
 
 		// ########## START PROGRAM #########
 		while(!number.equals("3")){
+			// This loop keeps the project running in a loop, prompting the app entrance.
 			productList = Product.getAllProducts(); // products
 			System.out.println("COSC2081 GROUP ASSIGNMENT ");
 			System.out.println( "STORE ORDER MANAGEMENT SYSTEM"); 
@@ -32,22 +32,20 @@ public class Main {
 			System.out.println("Press 2 to Sign Up.");
 			System.out.println("Press 3 to Exit.");
 			Scanner sc = new Scanner(System.in);
-			System.out.print("Press any number here: ");
+			System.out.print("Enter any number here: ");
 			String letter = sc.nextLine().toUpperCase().trim();
 			number = letter;
 
 			switch(letter){
 				case "1":
+					// This leads to Sign In
 					displayAMain();
-					System.out.println("-------------------------------");
-					System.out.println("-------------------------------");
-					System.out.println("-------------------------------");
+					System.out.println("-------------------------------\n" + "-------------------------------\n");
 					break;
 				case "2":
+					// This leads to Sign Up
 					showSignUp();
-					System.out.println("-------------------------------");
-					System.out.println("-------------------------------");
-					System.out.println("-------------------------------");
+					System.out.println("-------------------------------\n" + "-------------------------------\n");
 					break;
 				default:
 					break;
@@ -55,11 +53,13 @@ public class Main {
 		}
 	}
 	public static void displayAMain() throws SQLException {
-		Database db = new Database(); // db connection
+		// ######################### Main Program #############################
+		Database db = new Database(); // start db connection
 		do {
 			result = User.login();
 		} while (result == null);
-		if ((Boolean) result.get("isAdmin")) { // as an admin
+		if ((Boolean) result.get("isAdmin")) {
+			// run if user is as an admin
 			currentAdmin = new Admin(result);
 			String number = " ";
 			while(!number.equals("6")){
@@ -83,26 +83,30 @@ public class Main {
 						currentAdmin.addNewProduct();
 						break;
 					case "4":
-						Order.searchOrderByCustomerID();
+						Admin.searchOrderByCustomerID();
 						break;
 					case "5":
+						Admin.displayAllOrders();
 						Order.updateOrderStatus();
 						break;
 					case "6":
 					default:
+						System.out.println("Wrong input format, try again");
 						break;
 				}
 			}
-		} else { // as a customer
+		} else {
+			// run if user is a customer
 			currentCustomer = new Customer(result);
 			String input = "";
 			Scanner sc = new Scanner(System.in);
 			while(!input.equals("8")){
+				productList = Product.getAllProducts();
 				System.out.println("Press (0) to show your information.                    Press (1) to show all products.            Press (2) to sort product by price.");
 				System.out.println("Press (3) to sort product by category.                 Press (4) to add product to Shopping Cart. Press (5) to see your Shopping Cart.");
 				System.out.println("Press (6) to checkout from your current Shopping Cart. Press (7) to search for order.             Press (8) to exit to main menu.");
 				System.out.print("Enter any number: ");
-				input = sc.nextLine().toUpperCase().trim();
+				input = sc.nextLine().trim();
 
 				switch(input){
 					case "0":
@@ -112,7 +116,20 @@ public class Main {
 						Product.showAllProducts(productList);
 						break;
 					case "2":
-						Product.showAllProducts(Product.sortByPrice(productList, "ascend"));
+						System.out.print("Enter (1) to sort for lower prices first\nEnter (2) to sort for higher prices first\nEnter a number: ");
+						Scanner _sc = new Scanner(System.in);
+						String _input = _sc.nextLine().trim();
+						switch (_input){
+							case "1":
+								Product.showAllProducts(Product.sortByPrice(productList, "ascend"));
+								break;
+							case "2":
+								Product.showAllProducts(Product.sortByPrice(productList, "descend"));
+								break;
+							default:
+								System.out.println("Cannot recognize input, try again");
+								break;
+						}
 						break;
 					case "3":
 						Product.categoryFilter(productList);
@@ -128,9 +145,11 @@ public class Main {
 					case "6":
 						ShoppingCart.displayShoppingCart(entries);
 						ShoppingCart.displayTotalPrice(entries, currentCustomer);
-						ShoppingCart.checkout(entries, currentCustomer);
+						ShoppingCart.checkout(entries, currentCustomer, productList);
+						entries.clear();
 						break;
 					case "7":
+						currentCustomer.showMyOrders();
 						Order.searchOrderByOrderID();
 						break;
 					default:
@@ -142,6 +161,7 @@ public class Main {
 	}
 
 	public static void showSignUp(){
+		// run Sign Up UI
 		User.signUp();
 	}
 }
