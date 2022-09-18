@@ -142,43 +142,37 @@ public class ShoppingCart  {
         // select orderID
         // use selected ID to insert to orderDetails
 
-        String updateOrder = String.format("INSERT INTO test_for_java.order(buyerID, status,discount, totalAmount) VALUES (%d, '%s', '%s', %f)",
+        String updateOrder = String.format("INSERT INTO Orders(buyerID, orderStatus,discount, totalAmount) VALUES (%d, '%s', '%s', %f)",
                 customer.getUserId(),"delivered",customer.getMembership(),totalPrice);
         Database.updateQuery(updateOrder);
 
-        String selectOrderID = String.format("select * from test_for_java.`order` order by orderID DESC limit 1;");
+        String selectOrderID = String.format("select * from Orders order by orderID DESC limit 1;");
+        int orderID = 0;
         try{
             ResultSet rs = Database.runQuery(selectOrderID);
             rs.next();
-            int orderID = rs.getInt("orderID");
+            orderID = rs.getInt("orderID");
 
             for (CartEntry entry:entries){
                 int productID = entry.product.getProductID();
                 int quantity = entry.getQuantity();
-                String addOrderDetail = String.format("INSERT INTO orderdetails(orderID,productID,quantity) VALUES(%d,%d,%d)",
+                String addOrderDetail = String.format("INSERT INTO OrderDetails(orderID,productID,quantity) VALUES(%d,%d,%d)",
                         orderID,productID,quantity);
                Database.updateQuery(addOrderDetail);
             }
-
-
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-
-
-
-//        String query = String.format("INSERT INTO  test_for_java.order(buyerID, status, products, discount, totalAmount) VALUES (%d, '$s', '$s', '$s', '$f')",
 //                customer.getUserId(),"Completed","null",customer.getMembership(),totalPrice);
-        String updateMembership = String.format("UPDATE test_for_java.users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
+        String updateMembership = String.format("UPDATE Users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
 //        updateQuantity(entries);
 //        // add a function that decrease product quantity after a successful checkout
 //        // add another condition to check if there are stock in the db
 //        Database.updateQuery(query);
         Database.updateQuery(updateMembership);
-
         System.out.print("Checkout successfully!!!\n"
+                +"Your order ID is: " + orderID + "\n"
                 +"-----------------------------\n"
                 +"-----------------------------\n"
                 +"-----------------------------\n"

@@ -79,7 +79,7 @@ public class Product {
 	static List<Product> getAllProducts(){
 		List<Product> products = new ArrayList<Product>();
 		try {
-			ResultSet rs = Database.runQuery("select * from product");
+			ResultSet rs = Database.runQuery("select * from Product");
 			while(rs.next()) {
 				Product product = new Product(
 					rs.getInt("productID"),

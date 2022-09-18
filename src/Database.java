@@ -8,7 +8,8 @@ public class Database {
 	public Database() {
 		try {
 //			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "password");
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "Alpha12345@");
+//			this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_for_java", "root", "Alpha12345@");
+			this.conn = DriverManager.getConnection("jdbc:mysql://sql6.freesqldatabase.com:3306/sql6519106", "sql6519106", "SNpvDH6GlI");
 			Database.statement = conn.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();

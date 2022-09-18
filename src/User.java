@@ -145,7 +145,7 @@ class User{
 
 		
 		String query = String.format(
-			"INSERT INTO Users(f_name,age,username,password,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)",_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
+			"INSERT INTO Users(f_name,age,username,userPassword,phone,email,isAdmin) values('%s',%d,'%s','%s','%s','%s',%d)",_fullName,Integer.parseInt(_age),_userName,_password,_phoneNumber,_email,isAdmin
 		);
 		Database.updateQuery(query);
 
@@ -169,7 +169,7 @@ class User{
 		String password = scanner.nextLine().trim();
 
 		try {
-			String query = String.format("select * from Users where username='%s' and password='%s'", username, password);
+			String query = String.format("select * from Users where username='%s' and userPassword='%s'", username, password);
 			ResultSet rs = Database.runQuery(query);
 			// check if query returns anything
 			if (isResultSetEmpty(rs)) {
@@ -179,7 +179,7 @@ class User{
 			while (rs.next()) {
 				user.put("userID", rs.getInt("userID"));
 				user.put("username", rs.getString("username"));
-				user.put("password", rs.getString("password"));
+				user.put("password", rs.getString("userPassword"));
 				user.put("email", rs.getString("email"));
 				user.put("name", rs.getString("f_Name"));
 				user.put("age", rs.getString("age"));
@@ -189,8 +189,9 @@ class User{
 				user.put("membership", rs.getString("membership"));
 				user.put("isAdmin", rs.getBoolean("isAdmin"));
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e){
 			System.out.println("Login error");
+			e.printStackTrace();
 		}
 
 		return user;

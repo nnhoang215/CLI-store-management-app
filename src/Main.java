@@ -2,6 +2,7 @@ package src;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class Main {
 	static Map result;
@@ -58,10 +59,9 @@ public class Main {
 		do {
 			result = User.login();
 		} while (result == null);
-		boolean running = true;
 		if ((Boolean) result.get("isAdmin")) { // as an admin
 			currentAdmin = new Admin(result);
-			String number = " "; 
+			String number = " ";
 			while(!number.equals("6")){
 				productList = Product.getAllProducts(); // products
 				System.out.println("Press (1) to show all products.         Press (2) to update product's price.  Press (3) to add new products.");
