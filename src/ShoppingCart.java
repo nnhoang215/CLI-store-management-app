@@ -112,18 +112,18 @@ public class ShoppingCart  {
         return totalPrice;
     }
 
-    public static void updateQuantity(List<CartEntry> entries){
+    public static void updateQuantity(List<CartEntry> entries, List<Product> productList){
         for (int i=0; i< entries.size();i++){
             int productID = entries.get(i).product.getProductID();
             int changedQty = (entries.get(i).product.getQuantity()-entries.get(i).getQuantity());
-
-            String query = String.format("UPDATE test_for_java.product t SET t.quantity = %d WHERE t.productID = %d",
+            String query = String.format("UPDATE Product SET quantity = %d WHERE productID = %d",
                     changedQty,productID);
             Database.updateQuery(query);
+            productList = Product.getAllProducts();
         }
     }
 
-    public static void checkout(List<CartEntry> entries,Customer customer){
+    public static void checkout(List<CartEntry> entries,Customer customer,List<Product> productList){
         double totalPrice = calcTotalPrice(entries, customer);
         double totalSpending = customer.getTotalSpending();
         totalSpending += totalPrice;
@@ -166,7 +166,7 @@ public class ShoppingCart  {
 //                customer.getUserId(),"Completed","null",customer.getMembership(),totalPrice);
         String updateMembership = String.format("UPDATE Users t SET t.totalSpending = '%f', t.membership = '%s' WHERE t.userID = %d",
                 customer.getTotalSpending(),customer.getMembership(),customer.getUserId());
-//        updateQuantity(entries);
+        updateQuantity(entries, productList);
 //        // add a function that decrease product quantity after a successful checkout
 //        // add another condition to check if there are stock in the db
 //        Database.updateQuery(query);

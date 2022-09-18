@@ -128,7 +128,7 @@ public class Main {
 					case "6":
 						ShoppingCart.displayShoppingCart(entries);
 						ShoppingCart.displayTotalPrice(entries, currentCustomer);
-						ShoppingCart.checkout(entries, currentCustomer);
+						ShoppingCart.checkout(entries, currentCustomer, productList);
 						break;
 					case "7":
 						Order.searchOrderByOrderID();
