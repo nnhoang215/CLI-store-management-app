@@ -1,4 +1,5 @@
 Link to Git Repository: https://github.com/nnhoang215/CLI-store-management-app/
+Link to database creation SQL Commands: https://github.com/nnhoang215/CLI-store-management-db 
 Link to Demo video: https://youtu.be/ApM1P1Exyww
 
 Demo account:
